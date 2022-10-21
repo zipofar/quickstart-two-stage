@@ -60,8 +60,9 @@ jobs:
 
       - name: Read PR Number From Event Object
         id: pr
-        run: echo "::set-output name=number::${{ fromJSON(env.EVENT_JSON).number }}"
-        run: echo "::set-output name=git-ref::${{ fromJSON(env.EVENT_JSON).pull_request.head.ref }}"
+        run: |
+          echo "::set-output name=number::${{ fromJSON(env.EVENT_JSON).number }}"
+          echo "::set-output name=git-ref::${{ fromJSON(env.EVENT_JSON).pull_request.head.ref }}"
       - name: DEBUG - Print Job Outputs
         if: ${{ runner.debug }}
         run: |
