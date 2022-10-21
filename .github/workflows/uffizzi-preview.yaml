@@ -14,6 +14,7 @@ jobs:
     outputs:
       compose-file-cache-key: ${{ steps.hash.outputs.hash }}
       pr-number: ${{ steps.pr.outputs.number }}
+      git-ref: ${{ steps.pr.outputs.git-ref }}
     steps:
       - name: 'Download artifacts'
         # Fetch output (zip archive) from the workflow run that triggered this workflow.
@@ -60,6 +61,7 @@ jobs:
       - name: Read PR Number From Event Object
         id: pr
         run: echo "::set-output name=number::${{ fromJSON(env.EVENT_JSON).number }}"
+        run: echo "::set-output name=git-ref::${{ fromJSON(env.EVENT_JSON).pull_request.head.ref }}"
       - name: DEBUG - Print Job Outputs
         if: ${{ runner.debug }}
         run: |
@@ -71,7 +73,7 @@ jobs:
     name: Use Remote Workflow to Preview on Uffizzi
     needs:
       - cache-compose-file
-    uses: UffizziCloud/preview-action/.github/workflows/reusable.yaml@v2
+    uses: UffizziCloud/preview-action/.github/workflows/reusable.yaml@deprecate_set-output
     with:
       # If this workflow was triggered by a PR close event, cache-key will be an empty string
       # and this reusable workflow will delete the preview deployment.
@@ -79,6 +81,7 @@ jobs:
       compose-file-cache-path: docker-compose.rendered.yml
       server: https://app.uffizzi.com/
       pr-number: ${{ needs.cache-compose-file.outputs.pr-number }}
+      git-ref: ${{ needs.cache-compose-file.outputs.git-ref }}
     permissions:
       contents: read
       pull-requests: write
