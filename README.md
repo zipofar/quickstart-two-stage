@@ -1,7 +1,7 @@
 # Uffizzi Quickstart (~ 1 minute)
 
 
-[![Demo](https://cdn.uffizzi.com/demo-button.svg)](https://app.uffizzi.com/demo/github.com/NealArw/quickstart)
+[![Demo](https://cdn.uffizzi.com/demo-button.svg)](https://app.qa-gke.uffizzi.com/demo/github.com/NealArw/quickstart)
 
 
 Go from pull request to Uffizzi Preview Environment in less than one minute...
